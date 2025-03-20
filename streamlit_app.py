@@ -28,7 +28,6 @@ def main():
         plt.xlabel('Height (m)')
         plt.ylabel('Weight (kg)')
 
-        # Display the plot
         st.pyplot(plt)
 
 if __name__ == '__main__':
