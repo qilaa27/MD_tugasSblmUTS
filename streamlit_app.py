@@ -22,11 +22,25 @@ def main():
         st.dataframe(data)
 
     with st.expander("# **Data Visualization**"):
-        plt.figure(figsize=(10,6))
-        sns.scatterplot(data=data, x='Height', y='Weight', hue='NObeyesdad', palette='Set1', s=100, alpha=0.7)
+       plt.figure(figsize=(10,6))
+    
+        # Define color mapping for each category in 'NObeyesdad'
+        colors = {'Insufficient_Weight': 'blue', 'Normal_Weight': 'green', 
+                  'Obesity_Type_I': 'red', 'Obesity_Type_II': 'orange', 
+                  'Obesity_Type_III': 'purple'}
+
+        # Plot each category with the corresponding color
+        for category, color in colors.items():
+            subset = data[data['NObeyesdad'] == category]
+            plt.scatter(subset['Height'], subset['Weight'], label=category, color=color, s=100, alpha=0.7)
+
+        # Adding labels and title
         plt.title('Weight vs Height by Obesity Class')
         plt.xlabel('Height (m)')
         plt.ylabel('Weight (kg)')
+
+        # Show the legend
+        plt.legend(title='Obesity Class')
 
         # Display the plot
         st.pyplot(plt)
