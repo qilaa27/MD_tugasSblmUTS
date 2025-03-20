@@ -1,9 +1,6 @@
-# 📦 Streamlit App Starter Kit 
-```
-⬆️ (Replace above with your app's name)
-```
+ObesityDataSet_raw_and_data_sinthetic ML Project
 
-Description of the app ...
+ObesityDataSet_raw_and_data_sinthetic using ML
 
 ## Demo App
 
