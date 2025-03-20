@@ -16,7 +16,7 @@ def main():
 
     # Load and display raw data
     data = pd.read_csv('ObesityDataSet_raw_and_data_sinthetic.csv')
-    st.write("Data)
+    st.write("Data")
     st.write("This is a raw data")
     st.dataframe(data)  # Displaying the dataset in a dataframe
 
