@@ -18,8 +18,8 @@ def main():
     data = pd.read_csv('ObesityDataSet_raw_and_data_sinthetic.csv')
     
     # Create an expandable section
-    with st.expander("This is a raw data"):
-        st.markdown("### **Data**") 
+    with st.expander("# **Data**"):
+        st.markdown("This is a raw data") 
         st.dataframe(data)  # Displaying the dataset in a dataframe
 
 if __name__ == '__main__':
