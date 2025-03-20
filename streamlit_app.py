@@ -42,7 +42,6 @@ def main():
 
         # Display the plot
         st.pyplot(plt)
-            st.pyplot(plt)
 
 if __name__ == '__main__':
     main()
