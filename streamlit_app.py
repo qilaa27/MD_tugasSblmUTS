@@ -16,9 +16,13 @@ def main():
 
     # Load and display raw data
     data = pd.read_csv('ObesityDataSet_raw_and_data_sinthetic.csv')
-    st.write("Data")
-    st.write("This is a raw data")
-    st.dataframe(data)  # Displaying the dataset in a dataframe
+
+    # Make "Data" bold using markdown
+    st.markdown("### **Data**")  # Make the title "Data" bold
+    
+    # Create an expandable section
+    with st.expander("Click to view the raw data >"):
+        st.dataframe(data)  # Displaying the dataset in a dataframe
 
 if __name__ == '__main__':
     main()
