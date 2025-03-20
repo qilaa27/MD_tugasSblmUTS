@@ -22,7 +22,7 @@ def main():
         st.dataframe(data)
 
     with st.expander("# **Data Visualization**"):
-       plt.figure(figsize=(10,6))
+        plt.figure(figsize=(10,6))
     
         # Define color mapping for each category in 'NObeyesdad'
         colors = {'Insufficient_Weight': 'blue', 'Normal_Weight': 'green', 'Obesity_Type_I': 'red', 'Obesity_Type_II': 'orange', 'Obesity_Type_III': 'purple'}
