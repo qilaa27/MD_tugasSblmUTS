@@ -26,18 +26,6 @@ def main():
     # Load model
     model = load_model('trained_model.pkl')  # Ensure the model is in the right location
 
-    # User input
-    age = st.slider('Age', 18, 100, 25)
-    gender = st.selectbox('Gender', ['Male', 'Female'])
-    # Add other features as required...
-
-    # Prepare user input for prediction (this part will depend on the model's expected input format)
-    user_input = pd.DataFrame({'Age': [age], 'Gender': [gender]})  # Add other features to the input
-
-    # Predict using the model
-    if st.button('Predict'):
-        prediction = predict_with_model(model, user_input)
-        st.write(f"Predicted obesity level: {prediction}")
 
 if __name__ == '__main__':
     main()
