@@ -4,31 +4,44 @@ import numpy as np
 import joblib
 import matplotlib.pyplot as plt
 
+# Function to load the trained model
 def load_model(filename):
-    model = joblib.load(filename)
-    return model
+    try:
+        model = joblib.load(filename)
+        return model
+    except Exception as e:
+        st.error(f"Error loading the model: {e}")
+        return None
 
+# Function to make predictions using the model
 def predict_with_model(model, user_input):
-    prediction = model.predict([user_input])
-    prediction_prob = model.predict_proba([user_input])
-    return prediction[0], prediction_prob[0]
+    try:
+        prediction = model.predict([user_input])
+        prediction_prob = model.predict_proba([user_input])
+        return prediction[0], prediction_prob[0]
+    except Exception as e:
+        st.error(f"Error making prediction: {e}")
+        return None, None
 
 def main():
+    # App title and description
     st.title('Machine Learning App')
     st.info('This app will predict your obesity level!')
 
-    data = pd.read_csv('ObesityDataSet_raw_and_data_sinthetic.csv')
+    # Load the dataset
+    data = pd.read_csv('ObesityDataSet_raw_and_data_sinthetic.csv')  # Update path if necessary
 
-    with st.expander("# **Data**"):
-        st.markdown("This is a raw data") 
+    # Display raw data in an expandable section
+    with st.expander("**Data**"):
+        st.markdown("This is a raw data")
         st.dataframe(data)
 
-    with st.expander("# **Data Visualization**"):
-        plt.figure(figsize=(10,6))
-    
+    # Data visualization (Weight vs Height)
+    with st.expander("**Data Visualization**"):
+        plt.figure(figsize=(10, 6))
         # Define color mapping for each category in 'NObeyesdad'
         colors = {'Insufficient_Weight': 'blue', 'Normal_Weight': 'green', 'Obesity_Type_I': 'red', 'Obesity_Type_II': 'orange', 'Obesity_Type_III': 'purple'}
-
+        
         # Plot each category with the corresponding color
         for category, color in colors.items():
             subset = data[data['NObeyesdad'] == category]
@@ -67,6 +80,7 @@ def main():
     favc = 1 if favc == 'yes' else 0
     caec = {"Sometimes": 2, "Frequently": 1, "No": 0}[caec]
 
+    # Create the user input data list
     user_input = [gender, age, height, weight, family_history, favc, fcvc, ncp, caec]
 
     # Display the user input data
@@ -90,16 +104,20 @@ def main():
 
     # Button to predict when clicked
     if st.button('Predict'):
-        # Get prediction and probabilities
-        prediction, probabilities = predict_with_model(model, user_input)
+        if model is not None:
+            # Get prediction and probabilities
+            prediction, probabilities = predict_with_model(model, user_input)
 
-        # Show classification probabilities
-        st.subheader("Obesity Prediction")
-        prob_df = pd.DataFrame([probabilities], columns=["Insufficient Weight", "Normal Weight", "Overweight Level I", "Overweight Level II", "Obesity Type I", "Obesity Type II", "Obesity Type III"])
-        st.dataframe(prob_df)
+            if prediction is not None:
+                # Show classification probabilities
+                st.subheader("Obesity Prediction")
+                prob_df = pd.DataFrame([probabilities], columns=["Insufficient Weight", "Normal Weight", "Overweight Level I", "Overweight Level II", "Obesity Type I", "Obesity Type II", "Obesity Type III"])
+                st.dataframe(prob_df)
 
-        # Show final prediction
-        st.write(f"The predicted output is: {prediction}")
+                # Show final prediction
+                st.write(f"The predicted output is: {prediction}")
+        else:
+            st.error("Model could not be loaded. Please check the model file.")
 
 if __name__ == '__main__':
     main()
