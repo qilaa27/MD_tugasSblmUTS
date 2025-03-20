@@ -2,12 +2,14 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+import pickle
 import matplotlib.pyplot as plt
 
-# Function to load the trained model
+# Function to load the trained model using pickle
 def load_model(filename):
     try:
-        model = joblib.load(filename)
+        with open(filename, 'rb') as file:
+            model = pickle.load(file)
         return model
     except Exception as e:
         st.error(f"Error loading the model: {e}")
