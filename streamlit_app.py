@@ -15,8 +15,9 @@ def main():
     st.info('This app will predict your obesity level!')
 
     # Load and display raw data
-    data = pd.read_csv('ObesityDataSet_raw_and_data_sinthetic.csv')  # Update path if necessary
-    st.write("Raw Data")
+    data = pd.read_csv('ObesityDataSet_raw_and_data_sinthetic.csv')
+    st.write("Data)
+    st.write("This is a raw data")
     st.dataframe(data)  # Displaying the dataset in a dataframe
 
 if __name__ == '__main__':
