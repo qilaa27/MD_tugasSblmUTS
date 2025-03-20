@@ -19,13 +19,5 @@ def main():
     st.write("Raw Data")
     st.dataframe(data)  # Displaying the dataset in a dataframe
 
-    # Example: Display the first few rows of the dataset
-    st.write("First 5 Rows of Data:")
-    st.write(data.head())
-
-    # Load model
-    model = load_model('trained_model.pkl')  # Ensure the model is in the right location
-
-
 if __name__ == '__main__':
     main()
