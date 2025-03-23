@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import joblib
 import pickle
 import matplotlib.pyplot as plt
 
@@ -29,13 +30,7 @@ def main():
     st.title('Machine Learning App')
     st.info('This app will predict your obesity level!')
 
-    # Load the trained model once when the app starts
-    model = load_model('trained_model.pkl')  # Make sure this path is correct for your environment
-    if model is None:
-        st.error("Model could not be loaded. Please check the model file.")
-        return
-
-    # Load the dataset for displaying raw data and visualization
+    # Load the dataset
     data = pd.read_csv('ObesityDataSet_raw_and_data_sinthetic.csv')  # Update path if necessary
 
     # Display raw data in an expandable section
@@ -106,21 +101,25 @@ def main():
     input_df = pd.DataFrame(input_data)
     st.write(input_df)
 
+    # Load the trained model
+    model = load_model('trained_model.pkl')
+
     # Button to predict when clicked
     if st.button('Predict'):
-        # Get prediction and probabilities
-        prediction, probabilities = predict_with_model(model, user_input)
+        if model is not None:
+            # Get prediction and probabilities
+            prediction, probabilities = predict_with_model(model, user_input)
 
-        if prediction is not None:
-            # Show classification probabilities
-            st.subheader("Obesity Prediction")
-            prob_df = pd.DataFrame([probabilities], columns=["Insufficient Weight", "Normal Weight", "Overweight Level I", "Overweight Level II", "Obesity Type I", "Obesity Type II", "Obesity Type III"])
-            st.dataframe(prob_df)
+            if prediction is not None:
+                # Show classification probabilities
+                st.subheader("Obesity Prediction")
+                prob_df = pd.DataFrame([probabilities], columns=["Insufficient Weight", "Normal Weight", "Overweight Level I", "Overweight Level II", "Obesity Type I", "Obesity Type II", "Obesity Type III"])
+                st.dataframe(prob_df)
 
-            # Show final prediction
-            st.write(f"The predicted output is: {prediction}")
+                # Show final prediction
+                st.write(f"The predicted output is: {prediction}")
         else:
-            st.error("Prediction failed. Please check your inputs or the model.")
+            st.error("Model could not be loaded. Please check the model file.")
 
 if __name__ == '__main__':
     main()
